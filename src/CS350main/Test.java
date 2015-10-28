@@ -33,9 +33,9 @@ public class Test extends Survey{
     {
         int userChoice;
         Test test = new Test();
-        System.out.println("Please enter a name for the survey");
+        System.out.println("Please enter a name for the test");
         Scanner in_ = new Scanner(System.in);
-        String name = in_.next();
+        String name = in_.nextLine();
         test.setName(name);
         do 
         {
@@ -48,7 +48,8 @@ public class Test extends Survey{
             System.out.println("7) Quit");
             Scanner in = new Scanner(System.in);
             userChoice = in.nextInt();
-        
+            in.nextLine();
+            
             if (userChoice == 1) // T/F question (no correct answer)
                 addTrueFalseQuestion(test, in);
             else if (userChoice == 2) // Multiple choice question (no correct answer)
@@ -68,14 +69,14 @@ public class Test extends Survey{
     public static void addTrueFalseQuestion(Survey survey, Scanner in) 
     {
         System.out.println("Enter your prompt for the T/F question");   
-        String question = in.next();
+        String question = in.nextLine();
         
         ArrayList<TrueFalseAnswer> possibleAnswers = new ArrayList<TrueFalseAnswer>();
         possibleAnswers.add(new TrueFalseAnswer(true));
         possibleAnswers.add(new TrueFalseAnswer(false));
         
         System.out.println("Enter the correct answer for the T/F question");
-        String correct = in.next();
+        String correct = in.nextLine();
         TrueFalseAnswer correctAnswer = new TrueFalseAnswer(Boolean.valueOf(correct));
         TrueFalseQuestion tfQuestion = new TrueFalseQuestion(question, correctAnswer, possibleAnswers, null);
         survey.getQuestions().add(tfQuestion);
@@ -84,7 +85,7 @@ public class Test extends Survey{
     public static void addMultipleChoiceQuestion(Survey survey, Scanner in) //question, correct, possible, user
     {
         System.out.println("Enter your prompt for the multiple choice question");
-        String question = in.next();
+        String question = in.nextLine();
         HashMap<String, MultipleChoiceAnswer> possibleAnswers = new HashMap<String, MultipleChoiceAnswer>();
         String possibleAnswer;
         String letter;
@@ -92,8 +93,12 @@ public class Test extends Survey{
         {
             System.out.println("Please enter a letter or type exit to move on");
             letter = in.next();
-            System.out.println("Please enter the corresponding potential answer");
-            possibleAnswer = in.next();
+            in.nextLine();
+            if(!letter.equals("exit"))
+                System.out.println("Please enter the corresponding potential answer");
+            else
+                return;
+            possibleAnswer = in.nextLine();
             MultipleChoiceAnswer a = new MultipleChoiceAnswer(possibleAnswer);
             possibleAnswers.put(letter, a);
         } while(!possibleAnswer.equals("exit"));
@@ -101,7 +106,7 @@ public class Test extends Survey{
         System.out.println("Enter the correct letter for the multiple choice question");
         String correctLetter = in.next();
         System.out.println("Enter the correct answer for the multiple choice question");
-        String correctA = in.next();
+        String correctA = in.nextLine();
         MultipleChoiceAnswer correctAnswer = new MultipleChoiceAnswer(correctA);
         HashMap<String, MultipleChoiceAnswer> correct = new HashMap<String, MultipleChoiceAnswer>();
         correct.put(correctLetter, correctAnswer);
@@ -112,9 +117,9 @@ public class Test extends Survey{
     public static void addEssayQuestion(Survey survey, Scanner in, Integer userChoice) //question, correct, user
     {
         System.out.println("Enter your prompt for the essay/short answer question");
-        String question = in.next();
+        String question = in.nextLine();
         System.out.println("Enter the correct answer for the essay/short answer question");
-        String correct = in.next();
+        String correct = in.nextLine();
         if (userChoice == 4)
         {
             EssayAnswer correctAnswer = new EssayAnswer(correct);
@@ -132,7 +137,7 @@ public class Test extends Survey{
     public static void addMatchingQuestion(Survey survey, Scanner in, int userChoice)//question,correct,user,possible
     {
         System.out.println("Enter your prompt for the matching/ranking question");
-        String question = in.next();
+        String question = in.nextLine();
 
         String leftAnswer;
         String rightAnswer;
@@ -145,11 +150,11 @@ public class Test extends Survey{
             do
             {
                 System.out.println("Please enter a matching option or type exit to move on");
-                leftAnswer = in.next();
+                leftAnswer = in.nextLine();
                 if (!leftAnswer.equals("exit"))
                 {
                     System.out.println("Please enter what the option should be initially matched to");
-                    rightAnswer = in.next();
+                    rightAnswer = in.nextLine();
                     possibleAnswers.put(leftAnswer, rightAnswer);
                 }
 
@@ -158,11 +163,11 @@ public class Test extends Survey{
             do
             {
                 System.out.println("Please enter a matching option or type exit to move on");
-                correctLeftAnswer = in.next();
+                correctLeftAnswer = in.nextLine();
                 if(!correctLeftAnswer.equals("exit"))
                 {
                     System.out.println("Please enter what the option should be initially matched to");
-                    correctRightAnswer = in.next();
+                    correctRightAnswer = in.nextLine();
                     correctAnswer.put(correctLeftAnswer, correctRightAnswer);
                 }
             } while(!correctLeftAnswer.equals("exit"));
@@ -210,7 +215,7 @@ public class Test extends Survey{
     {
         System.out.println("Please enter the file path where you wish to save the survey");
         Scanner in = new Scanner(System.in);
-        String path = in.next();
+        String path = in.nextLine();
         test.setPath(path);
         try
         {
@@ -225,3 +230,5 @@ public class Test extends Survey{
         }
     }
 }
+
+

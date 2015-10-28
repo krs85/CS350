@@ -62,7 +62,7 @@ public class Survey implements Serializable {
         Survey survey = new Survey();
         System.out.println("Please enter a name for the survey");
         Scanner in_ = new Scanner(System.in);
-        String name = in_.next();
+        String name = in_.nextLine();
         survey.setName(name);
         do 
         {
@@ -75,6 +75,7 @@ public class Survey implements Serializable {
             System.out.println("7) Quit");
             Scanner in = new Scanner(System.in);
             userChoice = in.nextInt();
+            in.nextLine();
         
             if (userChoice == 1) // T/F question (no correct answer)
                 addTrueFalseQuestion(survey, in);
@@ -96,7 +97,7 @@ public class Survey implements Serializable {
     public static void addTrueFalseQuestion(Survey survey, Scanner in)
     {
         System.out.println("Enter your prompt for the T/F question");   
-        String question = in.next();
+        String question = in.nextLine();
         ArrayList<TrueFalseAnswer> possibleAnswers = new ArrayList<TrueFalseAnswer>();
         possibleAnswers.add(new TrueFalseAnswer(true));
         possibleAnswers.add(new TrueFalseAnswer(false));
@@ -106,7 +107,7 @@ public class Survey implements Serializable {
     public static void addMultipleChoiceQuestion(Survey survey, Scanner in)
     {
         System.out.println("Enter your prompt for the multiple choice question");
-        String question = in.next();
+        String question = in.nextLine();
         HashMap<String,MultipleChoiceAnswer> possibleAnswers = new HashMap<String,MultipleChoiceAnswer>();
         String possibleAnswer;
         String letter;
@@ -114,11 +115,12 @@ public class Survey implements Serializable {
         {
             System.out.println("Please enter a letter or type exit to move on");
             letter = in.next();
+            in.nextLine();
             if (!letter.equals("exit"))
                 System.out.println("Please enter the corresponding potential answer");
             else 
                 return;
-            possibleAnswer = in.next();
+            possibleAnswer = in.nextLine();
             MultipleChoiceAnswer a = new MultipleChoiceAnswer(possibleAnswer);
             possibleAnswers.put(letter, a);
         } while(!possibleAnswer.equals("exit"));
@@ -130,7 +132,7 @@ public class Survey implements Serializable {
     public static void addEssayQuestion(Survey survey, Scanner in, Integer userChoice)
     {
         System.out.println("Enter your prompt for the essay/short answer question");
-        String question = in.next();
+        String question = in.nextLine();
         if (userChoice == 4)
         {
             EssayQuestion essayQuestion = new EssayQuestion(question, null, null);
@@ -147,18 +149,18 @@ public class Survey implements Serializable {
     public static void addMatchingQuestion(Survey survey, Scanner in, int userChoice)
     {
         System.out.println("Enter your prompt for the matching/ranking question");
-        String question = in.next();
+        String question = in.nextLine();
         String leftAnswer;
         String rightAnswer;
         HashMap<String,String> possibleAnswers = new HashMap<String,String>();
         do
         {
             System.out.println("Please enter a possible answer or type exit to move on");
-            leftAnswer = in.next();
+            leftAnswer = in.nextLine();
             if (!leftAnswer.equals("exit"));
             {
                 System.out.println("Please enter what the answer should be matched to");
-                rightAnswer = in.next();
+                rightAnswer = in.nextLine();
                 possibleAnswers.put(leftAnswer, rightAnswer);
             }
 

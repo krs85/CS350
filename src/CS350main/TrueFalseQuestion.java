@@ -58,6 +58,6 @@ public class TrueFalseQuestion extends Question{
         System.out.println(this.question);
         System.out.println("True/False");
         if (this.correctAnswer != null)
-            System.out.println("The correct answer is" + this.correctAnswer);
+            System.out.println("The correct answer is " + this.correctAnswer);
     }
 }

@@ -37,7 +37,15 @@ public class Cs350Main {
         {
             currentTest = new Test();
             int testChoice = TestMenu();
-            testMenuChoice(testChoice);
+            int num = 0;
+            while (num != 1)
+            {
+                num = testMenuChoice(testChoice);
+                if (num != 1)
+                {
+                    testChoice = TestMenu();
+                }
+            }
         }
     }
     
@@ -112,12 +120,18 @@ public class Cs350Main {
         return userChoice;
     }
     
-    public static void testMenuChoice(Integer userChoice)
+    public static Integer testMenuChoice(Integer userChoice)
     {
         if (userChoice == 1)
+        {
             currentTest = Test.makeNew();
+            return 0;
+        }
         else if (userChoice == 2)
+        {
             Survey.display(currentTest);
+            return 0;
+        }
         else if (userChoice == 3)
         {
             System.out.println("Please enter the file path of the survey you want to display");
@@ -130,10 +144,16 @@ public class Cs350Main {
                 path = in.next();
                 currentTest = Test.load(path);
             }
+            return 0;
         }
         else if (userChoice == 4)
+        {
             Test.save(currentTest);
-        else if (userChoice == 5)
-            return;
+            return 0;
+        }
+        else
+        {
+            return 1;
+        }
     }
 }
