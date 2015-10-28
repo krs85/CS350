@@ -11,7 +11,7 @@ import java.util.HashMap;
  *
  * @author kellyshiptoski
  */
-public class MatchingAnswer {
+public class MatchingAnswer implements Answer {
     protected HashMap<String,String> answer;
     
     public MatchingAnswer(HashMap<String,String> answer)

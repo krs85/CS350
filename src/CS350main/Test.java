@@ -5,6 +5,11 @@
  */
 package CS350main;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -14,13 +19,53 @@ import java.util.Scanner;
  * @author kellyshiptoski
  */
 public class Test extends Survey{
-    public Test (ArrayList<Question> questions)
+    public Test (ArrayList<Question> questions, String path, String name)
     {
-        super(questions);
+        super(questions, path, name);
     }
     
-    @Override
-    public void addTrueFalseQuestion(Survey survey, Scanner in) 
+    public Test()
+    {
+        
+    }
+    
+    public static Test makeNew()
+    {
+        int userChoice;
+        Test test = new Test();
+        System.out.println("Please enter a name for the survey");
+        Scanner in_ = new Scanner(System.in);
+        String name = in_.next();
+        test.setName(name);
+        do 
+        {
+            System.out.println("1) Add a new T/F question");
+            System.out.println("2) Add a new multiple choice question");
+            System.out.println("3) Add a new short answer question");
+            System.out.println("4) Add a new essay question");
+            System.out.println("5) Add a new ranking question");
+            System.out.println("6) Add a new matching question");
+            System.out.println("7) Quit");
+            Scanner in = new Scanner(System.in);
+            userChoice = in.nextInt();
+        
+            if (userChoice == 1) // T/F question (no correct answer)
+                addTrueFalseQuestion(test, in);
+            else if (userChoice == 2) // Multiple choice question (no correct answer)
+                addMultipleChoiceQuestion(test, in);
+            else if (userChoice == 3) //Short answer (no correct answer)
+                addEssayQuestion(test, in, userChoice);
+            else if (userChoice == 4) //Essay question (no correct answer)
+                addEssayQuestion(test, in, userChoice);
+            else if (userChoice == 5) //Ranking question (no correct answer)
+                addMatchingQuestion(test, in, userChoice);
+            else if (userChoice == 6) //Matching question (no correct answer)
+                addMatchingQuestion(test, in, userChoice);
+        } while(userChoice != 7); 
+        return test;
+    }
+        
+    public static void addTrueFalseQuestion(Survey survey, Scanner in) 
     {
         System.out.println("Enter your prompt for the T/F question");   
         String question = in.next();
@@ -36,7 +81,7 @@ public class Test extends Survey{
         survey.getQuestions().add(tfQuestion);
     }
     
-    public void addMultipleChoiceQuestion(Survey survey, Scanner in) //question, correct, possible, user
+    public static void addMultipleChoiceQuestion(Survey survey, Scanner in) //question, correct, possible, user
     {
         System.out.println("Enter your prompt for the multiple choice question");
         String question = in.next();
@@ -64,7 +109,7 @@ public class Test extends Survey{
         survey.getQuestions().add(multChQuestion);
     }
 
-    public void addEssayQuestion(Survey survey, Scanner in, Integer userChoice) //question, correct, user
+    public static void addEssayQuestion(Survey survey, Scanner in, Integer userChoice) //question, correct, user
     {
         System.out.println("Enter your prompt for the essay/short answer question");
         String question = in.next();
@@ -84,7 +129,7 @@ public class Test extends Survey{
         }      
     }
 
-    public void addMatchingQuestion(Survey survey, Scanner in, int userChoice)//question,correct,user,possible
+    public static void addMatchingQuestion(Survey survey, Scanner in, int userChoice)//question,correct,user,possible
     {
         System.out.println("Enter your prompt for the matching/ranking question");
         String question = in.next();
@@ -136,6 +181,47 @@ public class Test extends Survey{
             RankingAnswer correctA = new RankingAnswer(correctAnswer);
             RankingQuestion rankQuestion = new RankingQuestion(question, correctA , null, a);
             survey.getQuestions().add(rankQuestion);
+        }
+    }
+    
+    public static Test load(String path)
+    {
+        Test t;
+        try
+        {
+            FileInputStream fileIn = new FileInputStream(path);
+            ObjectInputStream in = new ObjectInputStream(fileIn);
+            t = (Test) in.readObject();
+            in.close();
+            fileIn.close();
+            return t;
+        } catch (IOException i)
+        {
+            System.out.println("IOException");
+            return null;
+        } catch (ClassNotFoundException c)
+        {
+            System.out.println("Test class not found");
+            return null;
+        }
+    }
+    
+    public static void save(Test test)
+    {
+        System.out.println("Please enter the file path where you wish to save the survey");
+        Scanner in = new Scanner(System.in);
+        String path = in.next();
+        test.setPath(path);
+        try
+        {
+            FileOutputStream fileOut = new FileOutputStream(path);
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(test);
+            out.close();
+            fileOut.close();
+        } catch(IOException i)
+        {
+            System.out.println("IO Exception");
         }
     }
 }

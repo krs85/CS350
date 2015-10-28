@@ -9,7 +9,7 @@ package CS350main;
  *
  * @author kellyshiptoski
  */
-public class TrueFalseAnswer {
+public class TrueFalseAnswer implements Answer {
     private Boolean answer;
     
     public TrueFalseAnswer (Boolean answer)

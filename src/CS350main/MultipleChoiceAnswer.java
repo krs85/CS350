@@ -9,7 +9,7 @@ package CS350main;
  *
  * @author kellyshiptoski
  */
-public class MultipleChoiceAnswer {
+public class MultipleChoiceAnswer implements Answer {
     private String answer;
     
     public MultipleChoiceAnswer (String answer)

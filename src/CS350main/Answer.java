@@ -5,13 +5,12 @@
  */
 package CS350main;
 
+import java.io.Serializable;
+
 /**
  *
  * @author kellyshiptoski
  */
-public class ShortAnswerAnswer extends EssayAnswer {
-    public ShortAnswerAnswer (String answer)
-    {
-        super(answer);
-    }
+public interface Answer extends Serializable {
+    
 }

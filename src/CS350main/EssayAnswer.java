@@ -9,7 +9,7 @@ package CS350main;
  *
  * @author kellyshiptoski
  */
-public class EssayAnswer {
+public class EssayAnswer implements Answer {
     protected String answer;
     
     public EssayAnswer(String answer)

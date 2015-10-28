@@ -5,17 +5,16 @@
  */
 package CS350main;
 
+import java.io.Serializable;
+
 /**
  *
  * @author kellyshiptoski
  */
-public abstract class Question {
+public abstract class Question implements Serializable {
     
     abstract public void displayQuestion();
 
-    public void getAnswerFromUser()
-    {
-        
-    }
+    abstract public void getAnswerFromUser();
     
 }
